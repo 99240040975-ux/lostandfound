@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lost and Found</title>
+</head>
+<body>
+    <h1>Report Lost Item</h1>
+    <form id="lostForm">
+        <input type="text" name="name" placeholder="Name" required/>
+        <input type="text" name="description" placeholder="Description" required/>
+        <input type="text" name="location" placeholder="Location" required/>
+        <input type="date" name="date" required/>
+        <input type="text" name="contact" placeholder="Contact" required/>
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+        document.getElementById('lostForm').onsubmit = async function(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            await fetch('/api/items', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            alert('Item Reported!');
+        };
+    </script>
+</body>
+</html>

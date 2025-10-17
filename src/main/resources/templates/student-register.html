@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Registration - Lost & Found</title>
+    <style>
+        body { 
+            font-family: Arial; 
+            margin: 0; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 100%;
+        }
+        .logo { font-size: 48px; text-align: center; margin-bottom: 10px; }
+        h2 { color: #333; text-align: center; margin-bottom: 30px; }
+        input, select, button { 
+            width: 100%; 
+            padding: 12px; 
+            margin: 10px 0; 
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button { 
+            background: #667eea; 
+            color: white; 
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover { background: #5a6fd8; }
+        .error { color: red; text-align: center; margin: 10px 0; }
+        .success { color: green; text-align: center; margin: 10px 0; }
+        .back { text-align: center; margin-top: 20px; }
+        .back a { color: #667eea; text-decoration: none; margin: 0 10px; }
+    </style>
+    <script>
+        function validatePasswords() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const errorDiv = document.getElementById('passwordError');
+            
+            if (password !== confirmPassword) {
+                errorDiv.style.display = 'block';
+                return false;
+            } else {
+                errorDiv.style.display = 'none';
+                return true;
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('confirmPassword').addEventListener('input', validatePasswords);
+            document.querySelector('form').addEventListener('submit', function(e) {
+                if (!validatePasswords()) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">📝</div>
+        <h2>Student Registration</h2>
+        <form method="post" action="/student-register">
+            <input type="text" name="registrationNumber" placeholder="Registration Number" required/>
+            <input type="email" name="email" placeholder="Email Address" required/>
+            <input type="text" name="section" placeholder="Section (e.g., A, B, C)" required/>
+            <select name="year" required>
+                <option value="">Select Year</option>
+                <option value="1st Year">1st Year</option>
+                <option value="2nd Year">2nd Year</option>
+                <option value="3rd Year">3rd Year</option>
+                <option value="4th Year">4th Year</option>
+            </select>
+            <input type="password" name="password" id="password" placeholder="Create Password" required/>
+            <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" required/>
+            <button type="submit">Register</button>
+        </form>
+        <div class="error" th:if="${param.error == 'exists'}">Student already registered!</div>
+        <div class="error" th:if="${param.error == 'password'}">Passwords do not match!</div>
+        <div class="error" id="passwordError" style="display: none;">Passwords do not match!</div>
+        <div class="back">
+            <a href="/student-login">← Login</a>
+            <a href="/">Home</a>
+        </div>
+    </div>
+</body>
+</html>

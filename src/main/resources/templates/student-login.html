@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Login - Lost & Found</title>
+    <style>
+        body { 
+            font-family: Arial; 
+            margin: 0; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 100%;
+        }
+        .logo { font-size: 48px; text-align: center; margin-bottom: 10px; }
+        h2 { color: #333; text-align: center; margin-bottom: 30px; }
+        input, button { 
+            width: 100%; 
+            padding: 12px; 
+            margin: 10px 0; 
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button { 
+            background: #667eea; 
+            color: white; 
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover { background: #5a6fd8; }
+        .error { color: red; text-align: center; margin: 10px 0; }
+        .back { text-align: center; margin-top: 20px; }
+        .back a { color: #667eea; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🎓</div>
+        <h2>Student Login</h2>
+        <form method="post" action="/student-login">
+            <input type="text" name="username" placeholder="Registration Number" required/>
+            <input type="password" name="password" placeholder="Password" required/>
+            <button type="submit">Login</button>
+        </form>
+        <div class="error" th:if="${param.error}">Invalid credentials!</div>
+        <div class="success" th:if="${param.registered}">Registration successful! Please login.</div>
+        <div class="back">
+            <a href="/student-register">Register New Student</a><br>
+            <a href="/">← Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>
